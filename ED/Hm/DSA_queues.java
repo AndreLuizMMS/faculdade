@@ -1,10 +1,11 @@
+package Hm;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class DSA_queues {
   public static void main(String[] args) {
 
-    // FIFO DSA == First-in-First-out
+    // FIFO First-in-First-out
 
     // add() = queue, offer()
     // remove() - dequeue, poll()
@@ -15,6 +16,7 @@ public class DSA_queues {
     queue.offer(3);
     queue.offer(4);
     queue.offer(5);
+    
     // First-in-First-out
     
     queue.poll();// removes 1

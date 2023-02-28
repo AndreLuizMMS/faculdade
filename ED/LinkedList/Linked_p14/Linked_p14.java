@@ -2,7 +2,7 @@ package LinkedList.Linked_p14;
 
 import java.util.*;
 
-import LinkedList.Custom_nodelist.Lista_encadeda;
+import LinkedList.Custom_LinkedList.Lista_encadeda;
 
 public class Linked_p14 {
 

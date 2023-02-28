@@ -1,4 +1,4 @@
-package  LinkedList.Custom_nodelist;
+package  LinkedList.Custom_LinkedList;
 
 public class Lista_encadeda {
   private Nodo head = null;

@@ -57,6 +57,7 @@ public class Lista_p09 {
     } while (valor != 0 && erro != LISTA_CHEIA);
 
     exibeLista(v);
+    sc.close();
 
   }
 

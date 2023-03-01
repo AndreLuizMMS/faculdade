@@ -1,7 +1,5 @@
 package Pilhas;
 
-import java.util.*;
-
 public class CargaEmVolts {
 
   int topo;

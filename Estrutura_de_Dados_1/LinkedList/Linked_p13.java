@@ -24,6 +24,7 @@ public class Linked_p13 {
 
     System.out.println("Lista: " + lista);
 
-    System.exit(0);
+    sc.close();
+
   }
 }

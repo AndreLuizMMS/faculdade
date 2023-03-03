@@ -13,7 +13,7 @@ public class Somatorio {
 
   static public int somatorio(int n) {
     if (n < 1) {
-      return 1;
+      return 0;
     }
     return n + somatorio(n - 1);
   }

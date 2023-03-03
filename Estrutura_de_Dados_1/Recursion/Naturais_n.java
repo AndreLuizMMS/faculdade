@@ -6,9 +6,9 @@ public class Naturais_n {
 
   public static int naturaisAteN(int n) {
     if (n < 1) {
-      return 1;
+      return 0;
     }
 
-    return naturaisAteN(n -  1);
+    return naturaisAteN(n);
   }
 }

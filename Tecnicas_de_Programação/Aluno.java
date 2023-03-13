@@ -1,22 +1,32 @@
-
-public class Aluno {
-
+class Aluno {
   private String nome;
   private int idade;
-  private int media;
-  private String facul;
+  private int matricula;
+  private String turma;
 
-  public void createAluno(String nome, int idade, int media, String facul) {
+  public Aluno(String nome, int idade, int matricula) {
     this.nome = nome;
     this.idade = idade;
-    this.media = media;
-    this.facul = facul;
-
-    System.out.println("Aluno: " + this.nome + ", idade: " + this.idade + ", media: " + this.media
-        + ", Instituição: " + this.facul);
+    this.matricula = matricula;
   }
 
-  public void setIdade(int idade) {
-    this.idade = idade;
+  public String getNome() {
+    return nome;
+  }
+
+  public int getIdade() {
+    return idade;
+  }
+
+  public int getMatricula() {
+    return matricula;
+  }
+
+  public String getTurma() {
+    return turma;
+  }
+
+  public void setTurma(String turma) {
+    this.turma = turma;
   }
 }

@@ -32,7 +32,4 @@ public class Animal {
     this.name = name;
   }
 
-  public class Peixe extends Animal {
-    private boolean 
-  }
 }

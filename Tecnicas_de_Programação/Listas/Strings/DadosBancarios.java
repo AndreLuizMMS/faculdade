@@ -45,18 +45,12 @@ public class DadosBancarios {
     SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
     Date dataVencimentoFormatada = null;
     Date dataPagamentoFormatada = null;
-    try {
-      dataVencimentoFormatada = sdf1.parse(dataVencimento);
-      dataPagamentoFormatada = sdf1.parse(dataPagamento);
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
 
     System.out.println("Banco ............... " + banco + "\n"
         + "Moeda .............. " + moeda + "\n"
         + "Agência ............ " + agencia + "\n"
         + "Valor do boleto ..... " + valorBoletoFormatado + "\n"
-        + "Dt. Vencimento ...... " + sdf2.format(dataVencimentoFormatada) + "\n"
-        + "Dt. Pagamento ....... " + sdf2.format(dataPagamentoFormatada));
+        + "Dt. Vencimento ...... " + sdf2.format(dataVencimento) + "\n"
+        + "Dt. Pagamento ....... " + sdf2.format(dataPagamento));
   }
 }

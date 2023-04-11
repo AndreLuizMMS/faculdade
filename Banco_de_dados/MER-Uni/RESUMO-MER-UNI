@@ -1,0 +1,35 @@
+Entidades 
+
+	## Escola
+		. Nome - valor único
+		. Código - valor único
+		. Contato : telefone, email, site 
+		. Diretor (PROFESSOR)
+	
+	- Professor
+		
+	- Curso 
+		. Nome 
+		. Descrição
+		. Cód de id
+		. carga horária
+		. Coordenador (PROFESSOR)
+		. 1 ou mais DISCIPLINA
+	
+	- Disciplina
+		. Cód alfanumérico
+		. Nome
+		. Carga horária semanal
+		
+		
+Relacionamentos
+	- ESCOLA responsavel por vários CURSO
+	- ESCOLA responsavel por DISCIPLINA 
+
+	- PROFESSOR responsavel por ESCOLA (diretor)
+	- PROFESSOR responsavel por curso (coordendor)
+	
+	- DISCIPLINAS tem e poder ser pré-requisitos pra outras DISCIPLINAS
+	
+	
+		

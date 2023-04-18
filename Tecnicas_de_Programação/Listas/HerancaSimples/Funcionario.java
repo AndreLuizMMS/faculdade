@@ -24,7 +24,6 @@ public class Funcionario {
     System.out.println("Salário: " + salario);
   }
 
-  // getters e setters
   public double getSalario() {
     return salario;
   }
@@ -46,7 +45,6 @@ class Gerente extends Funcionario {
     this.setSalario(this.getSalario() * 1.15);
   }
 
-  // getters e setters
 }
 
 class Assistente extends Funcionario {

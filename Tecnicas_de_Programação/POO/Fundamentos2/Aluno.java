@@ -47,6 +47,7 @@ public class Aluno {
     }
 
     public static int gerarIdade() {
+        
         Random rand = new Random();
         return rand.nextInt(29) + 7;
     }
@@ -89,6 +90,7 @@ public class Aluno {
     }
 
     public static void main(String[] args) {
+        
         Scanner sc = new Scanner(System.in);
         System.out.println("Quantos alunos deseja cadastrar?");
         int quantidade = sc.nextInt();

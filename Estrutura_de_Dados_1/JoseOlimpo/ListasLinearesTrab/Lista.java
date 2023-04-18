@@ -1,3 +1,4 @@
+
 public class Lista {
 
   public int ultimo;
@@ -44,24 +45,50 @@ public class Lista {
     return false;
   }
 
-  public void retiraContato(Contato cont) {
+  public void retiraContato(int cont) {
     Contato deleted = new Contato();
-    for (int i = 0; i < contato.length; i++) {
-      if (contato[i] == cont) {
-        // apaga o conatato passado na parametro
+    for (int i = 0; i < contato.length; i++) {// acha cont dentro da lista
+      if (i == cont) {
+        // apaga o contato passado no parametro
         deleted = contato[i];
         contato[i] = null;
-        for (int j = i + 1; j < contato.length + 1; i++) {
+
+        for (int j = i - 1; j < contato.length; j++) {
           // remaneja todos os elementos
           contato[i] = contato[j];
         }
+
       }
     }
-    System.out.println(deleted + " foi deletado");
+    System.out.print("deletado: ");
+    deleted.getContato();
+    System.out.println();
 
   }
 
-  public void test() {
+  public void pesquisa(int cont) {
+
+    for (int i = 0; i < contato.length; i++) {
+      if (i == cont && contato[i] != null) {
+        System.out.print(i + " -> ");
+        contato[i].getContato();
+      } else {
+        System.out.println("[ERROR] Não encontrado ");
+        return;
+
+      }
+
+    }
+  }
+
+  public void getLista() {
+    for (int i = 0; i < contato.length; i++) {
+      if (contato[i] != null) {
+        System.out.print(i + " -> ");
+        contato[i].getContato();
+        System.out.println();
+      }
+    }
   }
 
 }

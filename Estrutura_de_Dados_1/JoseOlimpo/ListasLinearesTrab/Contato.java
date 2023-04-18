@@ -17,8 +17,9 @@ public class Contato {
   }
 
   public void getContato() {
-    System.out.println("Nome: " + nome);
-    System.out.println("CPF: " + cpf);
-    System.out.println("Endereço: " + endereco);
+    System.out.print("Nome: " + nome);
+    System.out.print(" CPF: " + cpf);
+    System.out.print(" Endereço: " + endereco);
   }
+
 }

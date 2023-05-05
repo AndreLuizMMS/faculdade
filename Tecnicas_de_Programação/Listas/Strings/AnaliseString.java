@@ -1,4 +1,4 @@
-package Listas.Strings;
+// package Listas.Strings;
 
 import java.util.Scanner;
 

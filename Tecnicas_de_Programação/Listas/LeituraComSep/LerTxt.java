@@ -3,7 +3,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class LerTxt {
 
   public static ArrayList<String[]> funcionarios = new ArrayList<String[]>();

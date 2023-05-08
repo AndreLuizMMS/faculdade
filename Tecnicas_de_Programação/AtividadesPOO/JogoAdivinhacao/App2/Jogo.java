@@ -1,3 +1,5 @@
+package AtividadesPOO.JogoAdivinhacao.App2;
+
 import javax.swing.JOptionPane;
 
 public class Jogo {
@@ -10,10 +12,19 @@ public class Jogo {
     int flag = 1;
 
     do {
-
       try {
-
         min = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor mínimo do intervalo:"));
+
+        flag = 0;
+      } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Insira somente números");
+      }
+
+    } while (flag != 0);
+
+    flag = 1;
+    do {
+      try {
         max = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor máximo do intervalo:"));
 
         if (max - min < 50) {
@@ -21,18 +32,15 @@ public class Jogo {
         } else {
           flag = 0;
         }
-
       } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Insira somente números");
       }
-
     } while (flag != 0);
 
     // TENTATIVAS
     flag = 1;
     do {
       try {
-
         maxTentativas = Integer
             .parseInt(JOptionPane.showInputDialog("Digite número máximo de tentativas de cada jogador:"));
         if (maxTentativas > 4 || maxTentativas < 1) {
@@ -40,7 +48,6 @@ public class Jogo {
         } else {
           flag = 0;
         }
-
       } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Insira somente números");
       }

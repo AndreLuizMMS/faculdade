@@ -1,6 +1,8 @@
-// package Listas.LeituraSemSep;
+package AtividadesPOO.LeituraSemSep;
 
 import java.util.*;
+
+import javax.swing.JOptionPane;
 
 public class Funcionario {
 
@@ -18,19 +20,32 @@ public class Funcionario {
 
   }
 
-  public void print() {
-    System.out.println(matricula);
-    System.out.println(name);
-    System.out.println(birth);
-    System.out.println(cpf);
+  public String getBirth() {
+    return birth;
+  }
 
-    for (Dependente data : dependentes) {
-      data.print();
-    }
+  public String getCpf() {
+    return cpf;
+  }
+
+  public ArrayList<Dependente> getDependentes() {
+    return dependentes;
+  }
+
+  public String getMatricula() {
+    return matricula;
+  }
+  public String getName() {
+    return name;
+  }
+
+  public void print() {
+
   }
 
   public void addDep(Dependente dep) {
     dependentes.add(dep);
+
   }
 
 }

@@ -1,3 +1,4 @@
+package AtividadesPOO.JogoAdivinhacao.App2;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
@@ -22,8 +23,10 @@ public class Controle {
     numeroGerado = (int) (Math.random() * (max - min + 1)) + min;
 
     jogadores = new ArrayList<Jogador>();
+
     for (int i = 0; i < maxJogadores; i++) {
-      jogadores.add(new Jogador(min, max, maxTentativas, numeroGerado));
+      String nome = JOptionPane.showInputDialog("Digite o nome do jogador " + (i + 1));
+      jogadores.add(new Jogador(nome, min, max, maxTentativas, numeroGerado));
     }
   }
 
@@ -38,6 +41,7 @@ public class Controle {
 
       for (int i = 0; i < jogadores.size(); i++) {
         // loop pela lista de jogadores
+
         if (jogadores.get(i).palpite()) {
           // o jogador tanta acertar e o metodo retorna true ou false para o palpite
           ganhadores += jogadores.get(i).getNome() + ", ";
@@ -45,8 +49,8 @@ public class Controle {
       }
     }
 
-    // Apresentando os prováveis ganhadores
-    JOptionPane.showMessageDialog(null, "Número sorteado: " + this.numeroGerado + "\nGanhadores: " + ganhadores);
+    // Ganhadores
+    JOptionPane.showMessageDialog(null, "Ganhadores: " + ganhadores);
 
   }
 

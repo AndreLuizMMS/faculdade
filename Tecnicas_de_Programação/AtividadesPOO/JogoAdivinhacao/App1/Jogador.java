@@ -1,3 +1,6 @@
+package AtividadesPOO.JogoAdivinhacao.App1;
+
+
 import javax.swing.JOptionPane;
 import java.util.Random;
 

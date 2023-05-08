@@ -1,4 +1,4 @@
-package App2;
+package AtividadesPOO.JogoAdivinhacao.App2;
 
 import javax.swing.JOptionPane;
 

@@ -1,5 +1,3 @@
-package AtividadesPOO.LeituraSemSep;
-
 import java.util.*;
 import javax.swing.JOptionPane;
 import java.io.FileReader;
@@ -13,16 +11,15 @@ public class Lertxt {
   public ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
   public void seedFuncionario() {
-    String FileName = "/home/deds/Coding/faculdade/Tecnicas_de_Programação/Listas/LeituraSemSep/data.md";
+    String FileName = "/home/deds/Coding/faculdade/Tecnicas_de_Programação/AtividadesPOO/LeituraSemSepara/src/data.md";
 
     try {
-
       FileReader file = new FileReader(FileName);
       BufferedReader buffer = new BufferedReader(file);
 
       String line;
-      // buffer.readLine() retorna linha no txt
 
+      // buffer.readLine() retorna linha no txt
       while ((line = buffer.readLine()) != null) {
 
         // Funcionario data -----------------
@@ -37,33 +34,30 @@ public class Lertxt {
         Funcionario tempFuncionario = new Funcionario(matricula, name, birth, cpf);
         funcionarios.add(tempFuncionario);
 
-        // fim dos dados do funcionário
+        // index do fim dos dados do funcionário
         int funcDataIndex = matricula.length() + name.length() + birth.length() - 2 + cpf.length() - 2;
 
         // Dependente data -----------------,
         String depData = line.substring(funcDataIndex, line.length());
 
         while (depData.length() > 1) {
-
           String depName = getDepNameFromReader(depData);
-          String depType = depData.substring(depName.length(), depName.length() + 1);
           String depBirth = formatData(depData.substring(depName.length() + 2, depName.length() + 10));
 
-          Dependente tempDep = new Dependente(depName, depType, depBirth);
+          String depType = depData.substring(depName.length(), depName.length() + 1);
+          int depTypeInt = Integer.parseInt(depType);
 
+          Dependente tempDep = new Dependente(depName, depTypeInt, depBirth);
           tempFuncionario.addDep(tempDep);
 
           int newDep = depName.length() + depType.length() + depBirth.length() - 1;
           depData = depData.substring(newDep, depData.length());
-
         }
-
       }
-
+      buffer.close();
     } catch (Exception e) {
       System.out.println(e);
     }
-
   }
 
   // GET DATA FROM READER -----------------------------------------
@@ -110,24 +104,6 @@ public class Lertxt {
     return false;
   }
 
-  public static int countDependents(String line) {
-    // Extrai as informações da linha
-
-    int index = 53; // Começa na posição do primeiro dependente
-    int count = 0; // Contador de dependentes
-
-    while (index < line.length()) {
-      char tipoDependente = line.charAt(index + 25);
-      index += 26; // Avança para a próxima posição de dependente
-
-      if (tipoDependente != '5') { // Não contar outros
-        count++;
-      }
-    }
-
-    return count;
-  }
-
   // FORMATTERS ---------------------------
   public static String formatData(String data) {
     String dia = data.substring(0, 2);
@@ -144,24 +120,37 @@ public class Lertxt {
   }
 
   public void displayFuncionarios(ArrayList<Funcionario> funcionarios) {
-    StringBuilder messageBuilder = new StringBuilder();
-    messageBuilder.append("Seq.\tNome do Funcionário\tData Nasc.\tCpf\n");
-    messageBuilder.append("===============================================================\n");
+    String msg = "Seq.   Nome do Funcionário   Data Nasc.   Cpf\n";
+    msg += "===============================================================\n";
 
     for (Funcionario funcionario : funcionarios) {
-      messageBuilder
-          .append(String.format("%04d\t%s %s\t%s\t%s\n", funcionario.getMatricula(), funcionario.getName(),
-              funcionario.getBirth(), funcionario.getCpf()));
-      messageBuilder.append(" Dependentes:\tNome\tTipo\tData Nasc.\n");
-      for (Dependente dependent : funcionario.getDependentes()) {
-        messageBuilder.append(
-            String.format("\t\t%s\t%s\t%s\n", dependent.getDepName(), dependent.getDepType(), dependent.getDepBirth()));
+      msg += funcionario.getMatricula() + "   " + funcionario.getName() + "   " +
+          funcionario.getBirth() + "   " + funcionario.getCpf() + "\n";
+
+      if (funcionario.dependentes.size() > 0) {
+        msg += "\n      Dependentes: Nome           Tipo               Data Nasc.\n";
+        for (Dependente dependente : funcionario.dependentes) {
+          msg += "     " + dependente.getDepName() + "               " + dependente.getDepType() + "               " +
+              dependente.getDepBirth() + "\n";
+        }
+      } else {
+        msg += "       Dependentes: (NÃO POSSUI)";
       }
-      messageBuilder.append(
-          ".............................................................................................................................\n");
+
+      msg += "\n.............................................................................................................................\n";
+
+      // Verifica se o número de linhas atingiu 15
+      String[] lines = msg.split("\r\n|\r|\n");
+      if (lines.length >= 15) {
+        JOptionPane.showMessageDialog(null, msg);
+        msg = ""; // Limpa a mensagem
+      }
     }
 
-    JOptionPane.showMessageDialog(null, messageBuilder.toString());
+    // Exibe a mensagem final, se houver alguma linha restante
+    if (!msg.isEmpty()) {
+      JOptionPane.showMessageDialog(null, msg);
+    }
   }
 
 }

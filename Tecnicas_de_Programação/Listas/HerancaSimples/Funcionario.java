@@ -34,11 +34,8 @@ public class Funcionario {
 }
 
 class Gerente extends Funcionario {
-  private String nivelGerencia;
-
   public Gerente(String nome, String cpf, String rg, double salario, String nivelGerencia) {
     super(nome, cpf, rg, salario);
-    this.nivelGerencia = nivelGerencia;
   }
 
   public void receberAumento() {

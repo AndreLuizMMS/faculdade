@@ -2,7 +2,6 @@ package Listas.Strings;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DadosBancarios {
 
@@ -40,10 +39,7 @@ public class DadosBancarios {
     DecimalFormat df = new DecimalFormat("#,##0.00");
     String valorBoletoFormatado = "R$ " + df.format(Double.parseDouble(valorBoleto));
 
-    SimpleDateFormat sdf1 = new SimpleDateFormat("ddMMyyyy");
     SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-    Date dataVencimentoFormatada = null;
-    Date dataPagamentoFormatada = null;
 
     System.out.println("Banco ............... " + banco + "\n"
         + "Moeda .............. " + moeda + "\n"

@@ -9,7 +9,6 @@ public class Main {
       BufferedReader reader = new BufferedReader(new FileReader("LeituraTxt//data.txt"));
       String line;
       while ((line = reader.readLine()) != null) {
-        String[] parts = line.split("-");
         System.out.println(line);
       }
       reader.close();

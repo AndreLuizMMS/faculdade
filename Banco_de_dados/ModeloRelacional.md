@@ -34,7 +34,7 @@
     Considere duas tabelas em um banco de dados: "Clientes" e "Pedidos".
 
     ° Na tabela "Clientes", a chave primária pode ser o "id_cliente".
-    ? Na tabela "Pedidos", pode ser necessário incluir uma chave estrangeira que faça referência ao "id_cliente" da tabela "Clientes". Essa chave estrangeira pode ser chamada de "id_cliente_fk".
+    ° Na tabela "Pedidos", pode ser necessário incluir uma chave estrangeira que faça referência ao "id_cliente" da tabela "Clientes". Essa chave estrangeira pode ser chamada de "id_cliente_fk".
 
   ## Chave simples:
      é uma chave composta por um único atributo.

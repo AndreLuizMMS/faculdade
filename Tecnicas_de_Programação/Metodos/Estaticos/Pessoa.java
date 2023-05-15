@@ -34,24 +34,28 @@ public class Pessoa {
   public static int lerMatricula() {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Digite a matrícula: ");
+    scanner.close();
     return scanner.nextInt();
   }
 
   public static String lerNome() {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Digite o nome: ");
+    scanner.close();
     return scanner.nextLine();
   }
 
   public static String lerCpf() {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Digite o CPF: ");
+    scanner.close();
     return scanner.nextLine();
   }
 
   public static double lerSalario() {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Digite o salário: ");
+    scanner.close();
     return scanner.nextDouble();
   }
 

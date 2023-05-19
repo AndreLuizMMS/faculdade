@@ -60,13 +60,20 @@ CREATE TABLE Aluno(
         email varchar(30)
 );
 
-CREATE TABLE Curso_aluno(
+-- como representar agregação
+--
+CREATE TABLE Aluno_Curso(
+        doc_id varchar(26),
         matricula numeric(5) NOT NULL,
         anoInicio numeric(4) NOT NULL,
         anoConclusao numeric(4) NOT NULL,
+        FOREIGN KEY (doc_id) REFERENCES Aluno(doc_id),
+        PRIMARY KEY (doc_id, matricula)
 );
 
 CREATE TABLE Funcionario(
+        id varchar(31),
+        PRIMARY KEY (id) GENERATED ALWAYS AS (matricula || doc_id),
         matricula numeric(5) NOT NULL,
         identidade varchar(12),
         cpf varchar(14),
@@ -78,5 +85,56 @@ CREATE TABLE Funcionario(
         email varchar(30),
         dtAdm date NOT NULL,
         dtDem date
+);
+
+-- pdf => p.16
+-- Conversão MER-MR, passo 3, C.4
+-- único atributo da SuperEnt q deve ser replicado nas subEnt
+-- é a PK que também será a PK de cada uma das tabelas que representam as sub-entidades.
+--
+--
+--  Além disso, será ao mesmo tempo uma FK referenciando a PK da tabela que representa a SuperEnt
+--
+CREATE TABLE Professor(
+        id varchar(31),
+        PRIMARY KEY (id) REFERENCES Funcionario(id), --??
+        FOREIGN KEY (id) REFERENCES Funcionario(id), --?? mesmo atributo é PK e FK
+        -- atributos de Funcionario se repetem em Professor e tecAdm?
+);
+
+-- pdf => p.17
+-- Conversão MER-MR, passo 4.1,
+-- chave será composta pela chave primária da
+-- tabela que representa o tipo regular de entidade do qual o
+-- tipo fraco depende mais o conjunto de atributos que é
+-- identificador parcial do tipo fraco em questão
+--
+CREATE TABLE Tipo_capacit(
+        id varchar(31) NOT NULL,
+        FOREIGN KEY (id) REFERENCES Professor(id),
+        PRIMARY KEY (id, tipo_capacit),
+        tipo_capacit varchar(2) NOT NULL,
+        descricao varchar(200) NOT NULL,
+        titulacao varchar(1) CHECK (titulacao IN ('B', 'E', 'M', 'D'))
+        -- Titulação: Bacharel, Especialista, Mestre, Doutor
+);
+
+CREATE TABLE Capacit_professor(
+        id varchar(31) NOT NULL,
+        FOREIGN KEY (id) REFERENCES Professor(id),
+        PRIMARY KEY (id, numItem),
+        numItem numeric(3) NOT NULL,
+        nome varchar(50) NOT NULL,
+        instituicao varchar(50),
+        carga_hr numeric(5),
+        dtInicio date,
+        dtTermino date,
+        observ varchar(200)
+);
+
+CREATE TABLE Tec_adm(
+        doc_id varchar(26),
+        PRIMARY KEY (doc_id) REFERENCES Funcionario(doc_id),
+        FOREIGN KEY (doc_id) REFERENCES Funcionario(doc_id),
 );
 

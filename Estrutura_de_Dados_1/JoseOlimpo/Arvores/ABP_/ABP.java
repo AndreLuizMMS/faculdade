@@ -73,6 +73,47 @@ public class ABP {
   public static void main(String[] args) {
 
   }
+
+  public Item retirar(Item obj) {
+    Item aux = null;
+    No z = consultar(obj);
+    if (z != null) {
+      aux = z.dados;
+      No y = null;
+      No x = null;
+      if (z.fd == null || z.fe == null) {
+        y = z;
+      } // z tem 1 filho só ou nenhum filho
+      else {
+        y = sucessor(z);
+      } // z tem dois filhos
+      if (y.fe != null) {
+        x = y.fe;
+      } else {
+        x = y.fd;
+      }
+      if (x != null) {
+        x.pai = y.pai;
+      } // pois y tem um filho
+      if (y.pai == null) {// y é a raiz
+        raiz = x;
+        if (x != null) {
+          x.pai = null;
+        } // pois y tem um filho
+      } else {// y não é raiz
+        if (y == y.pai.fe) {
+          y.pai.fe = x;
+        } else {
+          y.pai.fd = x;
+        }
+      }
+      if (y != z) {
+        z.dados = y.dados;
+      } // y é o sucessor de z --> copia dados de y para z
+      tamanho--;
+    }
+    return aux;
+  }
 }
 
 class Node {

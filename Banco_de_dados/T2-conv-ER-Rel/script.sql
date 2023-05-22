@@ -69,11 +69,14 @@ CREATE TABLE Aluno_Curso(
         anoConclusao numeric(4) NOT NULL,
         FOREIGN KEY (doc_id) REFERENCES Aluno(doc_id),
         PRIMARY KEY (doc_id, matricula)
+        -- regra n pra n 
+        
 );
 
 CREATE TABLE Funcionario(
         id varchar(31),
         PRIMARY KEY (id) GENERATED ALWAYS AS (matricula || doc_id),
+        -- so uma chave priamria
         matricula numeric(5) NOT NULL,
         identidade varchar(12),
         cpf varchar(14),
@@ -123,6 +126,7 @@ CREATE TABLE Capacit_professor(
         id varchar(31) NOT NULL,
         FOREIGN KEY (id) REFERENCES Professor(id),
         PRIMARY KEY (id, numItem),
+        -- chave p composta
         numItem numeric(3) NOT NULL,
         nome varchar(50) NOT NULL,
         instituicao varchar(50),

@@ -1,6 +1,4 @@
-package AtividadesPOO.LeituraComSep;
-
-
+// package AtividadesPOO.LeituraComSep;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,7 +10,7 @@ public class LerTxt {
   public static ArrayList<String[]> funcionarios = new ArrayList<String[]>();
 
   public void seedFuncionarios() {
-    String nomeArquivo = "data.MD";
+    String nomeArquivo = "/home/deds/Coding/faculdade/Tecnicas_de_Programação/AtividadesPOO/LeituraComSep/data.MD";
 
     try {
       FileReader arquivo = new FileReader(nomeArquivo);

@@ -1,134 +1,233 @@
-package Arvores.ABP_;
+  package Arvores.ABP_;
 
-public class ABP {
+  class Node {
+    public Node pai = null;
+    public Node left = null;
+    public Node right = null;
+    public Item value = null;
 
-  public int tamanho;
-  public Node root;
+    Node(Item obj) {
+      this.value = obj;
+    }
 
-  // inicializaz arvore
-  public void Abp() {
-    this.root = null;
-    this.tamanho = 0;
+    Node() {
+
+    }
   }
 
-  public boolean vazia() {
-    if (this.root == null) {
+  class Item {
+    public String nome, fone;
+
+    public Item(String nome, String fone) {
+      this.nome = nome;
+      this.fone = fone;
+    }
+
+    public String getFone() {
+      return fone;
+    }
+
+    public String getNome() {
+      return nome;
+    }
+
+    @Override
+    public String toString() {
+      return ("nome: " + nome + ", fone: " + fone);
+    }
+  }
+
+  public class ABP {
+    public int tamanho;
+    public Node root;
+
+    // inicializa arvore
+    public void Abp() {
+      this.root = null;
+      this.tamanho = 0;
+    }
+
+    public int getTamanho() {
+      return tamanho;
+    }
+
+    public boolean vazia() {
+      if (this.root == null) {
+        return true;
+      }
+      return false;
+    }
+
+    public Node consultar(Item obj) {
+      Node aux = this.root;
+
+      while (aux != null) {
+        if (obj.getNome().compareTo(aux.value.getNome()) < 0) { // meNoder q a root
+          aux = aux.left;
+        } else if (obj.getNome().compareTo(aux.value.getNome()) > 0) { // maior q a root
+          aux = aux.right;
+        } else {
+          return aux;
+        }
+      }
+      return null;
+    }
+
+    public Item pesquisar(Item obj) {
+      Node aux = consultar(obj);
+
+      if (aux == null) {
+        return null; // na encontrado
+      }
+      return (new Item(aux.value.getNome(), aux.value.getFone()));
+    }
+
+    // <sring>.compareTo(<string>)
+    // Retorna 0 se as strings forem iguais
+    // Retorna valor <0 se for alfabeticamente menor
+    // Retorna valor >0 se for alfabeticamente maior
+    public boolean inserir(Item obj) {
+      Node aux = new Node(obj); // quem vai entrar na arvore
+
+      if (root == null) { // vazia, estao data sera root, o primeiro
+        root = aux;
+        return true;
+      }
+
+      Node current = root;
+      Node parent = null;
+
+      while (current != null) {
+        if (obj.getNome().compareTo(current.value.getNome()) < 0) {
+          parent = current;
+          current = current.left;
+        } else if (obj.getNome().compareTo(current.value.getNome()) > 0) {
+          parent = current;
+          current = current.right;
+        } else {
+          return false; // erro => obj ja esta na arvore
+        }
+      }
+      aux.pai = parent;
+      if (obj.getNome().compareTo(parent.value.getNome()) < 0) {
+        parent.left = aux;
+      } else {
+        parent.right = aux;
+      }
       return true;
     }
-    return false;
-  }
 
-  public Node consultar(Item obj) {
-    Node aux = this.root;
-
-    while (aux != null) {
-      if (obj.getNome().compareTo(aux.value.getNome()) < 0) { // meNoder q a root
-        aux = aux.left;
-      } else if (obj.getNome().compareTo(aux.value.getNome()) > 0) { // maior q a root
-        aux = aux.right;
-      } else {
-        return aux;
+    private Node maximo(Node obj) {
+      if (obj == null) {
+        return null;
       }
-    }
-    return null;
-  }
 
-  public Item pesquisar(Item obj) {
-    Node aux = consultar(obj);
+      Node current = obj; // percorre pra encontrar o máximo
 
-    if (aux == null) {
-      return null; // na encontrado
-    }
-    return (new Item(aux.value.getNome(), aux.value.getFone()));
-  }
-
-  // <sring>.compareTo(<string>)
-  // Retorna 0 se as strings forem iguais
-  // Retorna valor <0 se for alfabeticamente menor
-  // Retorna valor >0 se for alfabeticamente maior
-  public void inserir(Item obj) {
-    Node aux = new Node(obj);
-
-    if (root == null) { // arvore vazia
-      root = aux;
-      return;
+      while (current.right != null) {
+        current = current.right;
+      }
+      return current; // maior valor na árvore
     }
 
-    Node current = root;
-    Node parent = null;
+    private Node minimo(Node obj) {
+      if (obj == null) {
+        return null;
+      }
 
-    while (current != null) {
-      parent = current;
+      Node current = obj; // percorre pra encontrar o máximo
 
-      if (obj.getNome().compareTo(current.value.getNome()) < 0) {
+      while (current.left != null) {
         current = current.left;
-        if (current == null) {// ultimo
-          parent.left = aux;
-        }
       }
+      return current; // maior valor na árvore
     }
 
-  }
-
-  public static void main(String[] args) {
-
-  }
-
-  public Item retirar(Item obj) {
-    Item aux = null;
-    No z = consultar(obj);
-    if (z != null) {
-      aux = z.dados;
-      No y = null;
-      No x = null;
-      if (z.fd == null || z.fe == null) {
-        y = z;
-      } // z tem 1 filho só ou nenhum filho
-      else {
-        y = sucessor(z);
-      } // z tem dois filhos
-      if (y.fe != null) {
-        x = y.fe;
-      } else {
-        x = y.fd;
+    private Node antecessor(Node obj) {
+      if (obj == null) {
+        return null;
       }
-      if (x != null) {
-        x.pai = y.pai;
-      } // pois y tem um filho
-      if (y.pai == null) {// y é a raiz
-        raiz = x;
-        if (x != null) {
-          x.pai = null;
-        } // pois y tem um filho
-      } else {// y não é raiz
-        if (y == y.pai.fe) {
-          y.pai.fe = x;
+      if (obj.left != null) {
+        return (maximo(obj.left));
+      }
+      Node current = obj.pai;
+      Node prev = obj;
+
+      while (current != null && prev == current.left) {
+        prev = current;
+        current = current.pai;
+      }
+      return current;
+    }
+
+    private Node sucessor(Node obj) {
+      if (obj == null) {
+        return null;
+      }
+      if (obj.right != null) {
+        return (minimo(obj.right));
+      }
+      Node current = obj.pai;
+      Node prev = obj;
+
+      while (current != null && prev == current.right) {
+        prev = current;
+        current = current.pai;
+      }
+
+      return current;
+    }
+
+    public Item remover(Item obj) {
+      Item itemRemovido = null;
+      Node nodePraSair = consultar(obj);
+
+      if (nodePraSair != null) {
+        itemRemovido = nodePraSair.value;
+        Node nodeFilho = null;
+        Node nodePai = null;
+
+        // Verificar se o nó a ser removido tem pelo menos um filho
+        if (nodePraSair.right == null || nodePraSair.left == null) {
+          nodeFilho = nodePraSair;
         } else {
-          y.pai.fd = x;
+          nodeFilho = sucessor(nodePraSair);
         }
+
+        // Determinar o filho do nó a ser removido
+        if (nodeFilho.left != null) {
+          nodePai = nodeFilho.left;
+        } else {
+          nodePai = nodeFilho.right;
+        }
+
+        // Atualizar a referência do pai do filho
+        if (nodePai != null) {
+          nodePai.pai = nodeFilho.pai;
+        }
+
+        // Verificar se o nó a ser removido é a raiz da árvore
+        if (nodeFilho.pai == null) {
+          root = nodePai;
+          if (nodePai != null) {
+            nodePai.pai = null;
+          }
+        } else {
+          if (nodeFilho == nodeFilho.pai.left) {
+            nodeFilho.pai.left = nodePai;
+          } else {
+            nodeFilho.pai.right = nodePai;
+          }
+        }
+
+        // Substituir o valor do nó removido pelo valor do sucessor
+        if (nodeFilho != nodePraSair) {
+          nodePraSair.value = nodeFilho.value;
+        }
+        tamanho--;
       }
-      if (y != z) {
-        z.dados = y.dados;
-      } // y é o sucessor de z --> copia dados de y para z
-      tamanho--;
+      return itemRemovido;
     }
-    return aux;
-  }
-}
-
-class Node {
-
-  public Node pai = null;
-  public Node left = null;
-  public Node right = null;
-  public Item value = null;
-
-  Node(Item obj) {
-    this.value = obj;
-  }
-
-  Node() {
+    
 
   }
-
-}

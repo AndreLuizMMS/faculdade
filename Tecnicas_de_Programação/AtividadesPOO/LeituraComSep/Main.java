@@ -38,7 +38,6 @@ public class Main {
         if (j == 4 && info == null) {
           info = "<Sem filhos>";
         }
-
         // formatação de SEXO---------------
         if (j == 6 && info != null) {
           info = sexoString(info);

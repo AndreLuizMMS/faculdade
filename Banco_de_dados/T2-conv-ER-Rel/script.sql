@@ -50,68 +50,73 @@ CREATE TABLE Aula(
 );
 
 CREATE TABLE Aluno(
-        identidade varchar(12) NOT NULL,
-        cpf varchar(14) NOT NULL PRIMARY KEY,
-        doc_id varchar(26) GENERATED ALWAYS AS (identidade || cpf),
+        identidade varchar(12),
+        cpf varchar(14),
+        doc_id varchar(26) NOT NULL,
         endereco varchar(200) NOT NULL,
         sexo varchar(1) NOT NULL CHECK (sexo IN ('M', 'F')),
         dtNasc date NOT NULL,
         tel_contato varchar(10),
-        email varchar(30)
+        email varchar(30),
+        PRIMARY KEY (doc_id),
+        CONSTRAINT doc_id_constraint CHECK ((identidade IS NOT NULL AND cpf IS NOT NULL AND doc_id =(identidade || cpf)) OR (identidade IS NULL AND cpf IS NULL AND doc_id IS NOT NULL))
 );
 
--- como representar agregação
---
 CREATE TABLE Aluno_Curso(
         doc_id varchar(26),
         matricula numeric(5) NOT NULL,
         anoInicio numeric(4) NOT NULL,
         anoConclusao numeric(4) NOT NULL,
         FOREIGN KEY (doc_id) REFERENCES Aluno(doc_id),
-        PRIMARY KEY (doc_id, matricula)
-        -- regra n pra n 
-        
+        PRIMARY KEY (matricula)
+);
+CREATE TABLE Aluno_Turma(
+    idTurma varchar,
+    codigo varchar(3),
+    doc_id varchar(26),
+    semestre numeric(1),
+    situacao char(1) CHECK (situacao IN ('A', 'T', 'C')),
+    nota1 numeric(4,2),
+    nota2 numeric(4,2),
+    mediaFinal numeric(4,2) GENERATED ALWAYS AS ((nota1 + nota2) / 2) STORED,
+    frequenciaFinal numeric(3),
+    resultadoFinal varchar(3) GENERATED ALWAYS AS (
+        CASE
+            WHEN mediaFinal >= 6.0 AND frequenciaFinal >= 75 THEN 'AP'
+            WHEN mediaFinal < 6.0 AND frequenciaFinal < 75 THEN 'RFM'
+            WHEN mediaFinal < 6.0 THEN 'RM'
+            WHEN frequenciaFinal < 75 THEN 'RF'
+        END
+    ) STORED,
+    FOREIGN KEY (idTurma, codigo,  semestre) REFERENCES Turma(idTurma, codigo, semestre),
+    FOREIGN KEY (doc_id) REFERENCES Aluno(doc_id),
+    PRIMARY KEY (idTurma, codigo,  semestre, doc_id)
 );
 
+
 CREATE TABLE Funcionario(
-        id varchar(31),
-        PRIMARY KEY (id) GENERATED ALWAYS AS (matricula || doc_id),
-        -- so uma chave priamria
+        id varchar(31) NOT NULL,
         matricula numeric(5) NOT NULL,
         identidade varchar(12),
         cpf varchar(14),
-        doc_id varchar(26) GENERATED ALWAYS AS (identidade || cpf),
+        doc_id varchar(26) NOT NULL,
         endereco varchar(200) NOT NULL,
         sexo varchar(1) NOT NULL CHECK (sexo IN ('M', 'F')),
         dtNasc date NOT NULL,
         tel_contato varchar(10),
         email varchar(30),
         dtAdm date NOT NULL,
-        dtDem date
+        dtDem date,
+        PRIMARY KEY (doc_id),
+        CONSTRAINT doc_id_constraint CHECK ((identidade IS NOT NULL AND cpf IS NOT NULL AND doc_id =(identidade || cpf)) OR (identidade IS NULL AND cpf IS NULL AND doc_id IS NOT NULL))
 );
 
--- pdf => p.16
--- Conversão MER-MR, passo 3, C.4
--- único atributo da SuperEnt q deve ser replicado nas subEnt
--- é a PK que também será a PK de cada uma das tabelas que representam as sub-entidades.
---
---
---  Além disso, será ao mesmo tempo uma FK referenciando a PK da tabela que representa a SuperEnt
---
 CREATE TABLE Professor(
         id varchar(31),
-        PRIMARY KEY (id) REFERENCES Funcionario(id), --??
-        FOREIGN KEY (id) REFERENCES Funcionario(id), --?? mesmo atributo é PK e FK
-        -- atributos de Funcionario se repetem em Professor e tecAdm?
+        PRIMARY KEY (id),
+        FOREIGN KEY (id) REFERENCES Funcionario(id),
 );
 
--- pdf => p.17
--- Conversão MER-MR, passo 4.1,
--- chave será composta pela chave primária da
--- tabela que representa o tipo regular de entidade do qual o
--- tipo fraco depende mais o conjunto de atributos que é
--- identificador parcial do tipo fraco em questão
---
 CREATE TABLE Tipo_capacit(
         id varchar(31) NOT NULL,
         FOREIGN KEY (id) REFERENCES Professor(id),
@@ -125,8 +130,7 @@ CREATE TABLE Tipo_capacit(
 CREATE TABLE Capacit_professor(
         id varchar(31) NOT NULL,
         FOREIGN KEY (id) REFERENCES Professor(id),
-        PRIMARY KEY (id, numItem),
-        -- chave p composta
+        PRIMARY KEY (numItem),
         numItem numeric(3) NOT NULL,
         nome varchar(50) NOT NULL,
         instituicao varchar(50),
@@ -138,7 +142,8 @@ CREATE TABLE Capacit_professor(
 
 CREATE TABLE Tec_adm(
         doc_id varchar(26),
-        PRIMARY KEY (doc_id) REFERENCES Funcionario(doc_id),
+        PRIMARY KEY (doc_id),
         FOREIGN KEY (doc_id) REFERENCES Funcionario(doc_id),
 );
 
+'

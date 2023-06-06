@@ -32,6 +32,7 @@ public class Main {
         }
         if (j == 3) {
           int real = Integer.parseInt(info);
+          
           info = formatReal(real);
         }
 

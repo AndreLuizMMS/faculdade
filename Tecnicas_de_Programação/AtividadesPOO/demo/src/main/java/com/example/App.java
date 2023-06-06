@@ -13,8 +13,10 @@ public class App {
   }
 
   public static void start() {
+    
     Scanner scanner = new Scanner(System.in);
     int opcao;
+
     do {
       System.out.println("Escolha uma opção:");
       System.out.println("1 - Incluir Profissão");

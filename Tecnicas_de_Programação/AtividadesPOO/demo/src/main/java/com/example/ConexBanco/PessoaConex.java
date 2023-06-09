@@ -147,4 +147,36 @@ public class PessoaConex {
       }
     }
   }
+
+  public static void alterarPessoa(int id, String novoNome) {
+    Connection conn = null;
+    PreparedStatement pstm = null;
+
+    String sql = "UPDATE Pessoa SET nome = ? WHERE id = ?";
+
+    try {
+      conn = ConnectionDB.connectToDB();
+      pstm = conn.prepareStatement(sql);
+
+      pstm.setString(1, novoNome);
+      pstm.setInt(2, id);
+
+      pstm.executeUpdate();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+
+    } finally {
+      try {
+        if (pstm != null) {
+          pstm.close();
+        }
+        if (conn != null) {
+          conn.close();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }

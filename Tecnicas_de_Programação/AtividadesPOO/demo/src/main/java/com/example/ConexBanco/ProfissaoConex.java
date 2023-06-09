@@ -143,7 +143,7 @@ public class ProfissaoConex {
     }
   }
 
-  public static void alterarProfissao(Profissao profissao) {
+  public static void alterarProfissao(int id, String novoNome) {
     Connection conn = null;
     PreparedStatement pstm = null;
 
@@ -153,7 +153,8 @@ public class ProfissaoConex {
       conn = ConnectionDB.connectToDB();
       pstm = conn.prepareStatement(sql);
 
-      pstm.setString(1, profissao.getNome());
+      pstm.setString(1, novoNome);
+      pstm.setInt(2, id);
 
       pstm.executeUpdate();
 

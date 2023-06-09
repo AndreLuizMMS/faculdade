@@ -13,18 +13,18 @@ public class App {
   }
 
   public static void start() {
-    
+
     Scanner scanner = new Scanner(System.in);
     int opcao;
 
     do {
       System.out.println("Escolha uma opção:");
       System.out.println("1 - Incluir Profissão");
-      // System.out.println("2 - Alterar Profissão");
+      System.out.println("2 - Alterar Profissão");
       System.out.println("3 - Excluir Profissão");
       System.out.println("4 - Listar profissões");
       System.out.println("5 - Incluir Pessoa");
-      // System.out.println("6 - Alterar Pessoa");
+      System.out.println("6 - Alterar Pessoa");
       System.out.println("7 - Excluir Pessoa");
       System.out.println("8 - Listar Pessoas/Telefones");
       System.out.println("9 - Fim");
@@ -37,7 +37,11 @@ public class App {
           ProfissaoConex.incluirProfissao(profissaoTemp);
           break;
         case 2:
-          // alterarProfissao();
+          System.out.println("Digite o id da Profissao que deseja alterar: ");
+          int idnovaProf = scanner.nextInt();
+          System.out.println("Digite o nome da nova Profissao : ");
+          String novaProf = scanner.next();
+          ProfissaoConex.alterarProfissao(idnovaProf, novaProf);
           break;
         case 3:
           System.out.println("Digite o id ou nome da profissão que deseja excluir: ");
@@ -56,7 +60,12 @@ public class App {
           PessoaConex.incluirPessoa(Pessoatemp);
           break;
         case 6:
-          // alterarPessoa();
+          System.out.println("Digite o id da Pessoa que deseja alterar: ");
+          int idNovoNome = scanner.nextInt();
+          System.out.println("Digite o nome da Pessoa que deseja alterar: ");
+          String novoNome = scanner.next();
+
+          PessoaConex.alterarPessoa(idNovoNome, novoNome);
           break;
         case 7:
           System.out.println("Digite o id ou nome da Pessoa que deseja excluir: ");

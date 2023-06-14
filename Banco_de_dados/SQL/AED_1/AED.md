@@ -18,3 +18,16 @@ Due June 20, 2023 11:59 PM ° Closes *June 20*, 2023 11:59 PM
   - Forma de Registro: Envio de dois arquivos pelo Teams. O primeiro arquivo deve conter uma explicação sobre como funciona a integração entre a linguagem escolhida e o SGBD relacional escolhido. O segundo arquivo deve conter os códigos fontes criados. Os arquivo devem ter como nome o nome do aluno seguido da numeração 1 para o primeiro arquivo e 2 para o segundo arquivo.
  
   - Avaliação: Além de 8 horas de frequência do total de horas da disciplina, a entrega da AED ajudará a compor a nota de conceito C2 da N2.
+
+
+
+
+
+
+
+
+
+
+
+
+

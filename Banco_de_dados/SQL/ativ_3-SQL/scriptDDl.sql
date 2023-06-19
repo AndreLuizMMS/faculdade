@@ -2,7 +2,7 @@ BEGIN;
 CREATE TABLE tab_escolas(
   codigo_escola char(4) NOT NULL,
   nome_escola varchar(40) NOT NULL,
-  diretor_escola numeric(5) NOT NULL,
+  diretor_escola numeric(5) NOT NULL, -- matricula funcionario
   PRIMARY KEY (codigo_escola),
   UNIQUE (diretor_escola),
   UNIQUE (nome_escola)
@@ -22,22 +22,8 @@ CREATE TABLE tab_cursos(
   coordenador_curso numeric(5) NOT NULL,
   PRIMARY KEY (codigo_curso),
   UNIQUE (nome_curso),
-  UNIQUE (coordenador_curso),
+  UNIQUE (coordenador_curso), -- matricula funcionario
   FOREIGN KEY (escola_curso) REFERENCES tab_escolas(codigo_escola)
-);
-CREATE TABLE tab_alunos(
-  id_aluno serial NOT NULL, -- identificador gerado pelo SGBD para o aluno já que ele não tem atributo obrigatório identificador natural
-  nome_aluno varchar(40) NOT NULL,
-  cart_identidade_aluno varchar(12) NULL,
-  cpf_aluno varchar(14) NULL,
-  end_aluno varchar(200) NOT NULL,
-  sexo_aluno char(1) NOT NULL,
-  data_nasc_aluno date NOT NULL,
-  PRIMARY KEY (id_aluno),
-  UNIQUE (cpf_aluno),
-  UNIQUE (cart_identidade_aluno),
-  CHECK (sexo_aluno = 'M' OR sexo_aluno = 'F'),
-  CHECK (cart_identidade_aluno IS NOT NULL OR cpf_aluno IS NOT NULL)
 );
 CREATE TABLE tab_fones_alunos(
   id_aluno integer NOT NULL,
@@ -79,6 +65,27 @@ CREATE TABLE tab_tec_administ(
   PRIMARY KEY (matricula_tec_administ),
   FOREIGN KEY (matricula_tec_administ) REFERENCES tab_funcionarios(matricula_funcionario)
 );
+CREATE TABLE tab_capacitacoes_professores(
+  matricula_professor numeric(5) NOT NULL,
+  numero_capacit_prof integer NOT NULL,
+  nome_capacit_prof varchar(50) NOT NULL,
+  tipo_capacit_prof numeric(3) NOT NULL,
+  responsavel_capacit_prof varchar(50) NULL,
+  carga_horaria_capacit_prof numeric(5) NULL,
+  data_ini_capacit_prof date NULL,
+  data_fim_capacit_prof date NULL,
+  observacao_capacit_prof varchar(200) NULL,
+  PRIMARY KEY (matricula_professor, numero_capacit_prof),
+  FOREIGN KEY (tipo_capacit_prof) REFERENCES tab_tipos_capacitacoes(tipo_capacitacao),
+  FOREIGN KEY (matricula_professor) REFERENCES tab_professores(matricula_professor)
+);
+CREATE TABLE tab_tipos_capacitacoes(
+  tipo_capacitacao char(2) NOT NULL,
+  descricao_capacitacao varchar(200) NOT NULL,
+  titulo_obtido_capacitacao char(1) NULL,
+  CHECK (titulo_obtido_capacitacao IN ('BE', 'ES', 'ME', 'DR', 'PD')),
+  PRIMARY KEY (tipo_capacitacao)
+);
 CREATE TABLE tab_disciplinas(
   codigo_disciplina char(7) NOT NULL,
   nome_disciplina varchar(40) NOT NULL,
@@ -106,58 +113,6 @@ CREATE TABLE tab_turmas(
   FOREIGN KEY (codigo_disciplina_turma) REFERENCES tab_disciplinas(codigo_disciplina),
   CHECK (semestre_turma = 1 OR semestre_turma = 2)
 );
-CREATE TABLE tab_tipos_capacitacoes(
-  tipo_capacitacao char(2) NOT NULL,
-  descricao_capacitacao varchar(200) NOT NULL,
-  titulo_obtido_capacitacao char(1) NULL,
-  CHECK (titulo_obtido_capacitacao IN ('BE', 'ES', 'ME', 'DR', 'PD')),
-  PRIMARY KEY (tipo_capacitacao)
-);
-CREATE TABLE tab_capacitacoes_professores(
-  matricula_professor numeric(5) NOT NULL,
-  numero_capacit_prof integer NOT NULL,
-  nome_capacit_prof varchar(50) NOT NULL,
-  tipo_capacit_prof numeric(3) NOT NULL,
-  responsavel_capacit_prof varchar(50) NULL,
-  carga_horaria_capacit_prof numeric(5) NULL,
-  data_ini_capacit_prof date NULL,
-  data_fim_capacit_prof date NULL,
-  observacao_capacit_prof varchar(200) NULL,
-  PRIMARY KEY (matricula_professor, numero_capacit_prof),
-  FOREIGN KEY (tipo_capacit_prof) REFERENCES tab_tipos_capacitacoes(tipo_capacitacao),
-  FOREIGN KEY (matricula_professor) REFERENCES tab_professores(matricula_professor)
-);
-CREATE TABLE tab_aulas(
-  id_turma_aula integer NOT NULL,
-  dia_semana_aula char(3) NOT NULL,
-  hora_inicio_aula time NOT NULL,
-  hora_fim_aula time NOT NULL,
-  tipo_aula char(1) NOT NULL,
-  professor_aula numeric(5) NULL,
-  PRIMARY KEY (id_turma_aula, dia_semana_aula, hora_inicio_aula),
-  FOREIGN KEY (id_turma_aula) REFERENCES tab_turmas(id_turma),
-  FOREIGN KEY (professor_aula) REFERENCES tab_professores(matricula_professor),
-  CHECK (dia_semana_aula IN ('Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab')),
-  CHECK (tipo_aula = 'P' OR tipo_aula = 'L')
-);
-CREATE TABLE tab_alunos_cursos(
-  id_aluno integer NOT NULL,
-  codigo_curso numeric(3) NOT NULL,
-  matricula_aluno_curso numeric(14) NOT NULL,
-  ano_inicio_aluno_curso numeric(4) NOT NULL,
-  ano_conclusao_aluno_curso numeric(4) NULL,
-  PRIMARY KEY (matricula_aluno_curso),
-  UNIQUE (id_aluno, codigo_curso),
-  FOREIGN KEY (id_aluno) REFERENCES tab_alunos(id_aluno),
-  FOREIGN KEY (codigo_curso) REFERENCES tab_cursos(codigo_curso)
-);
-CREATE TABLE tab_disciplinas_pre_req(
-  codigo_disciplina char(7) NOT NULL,
-  codigo_disciplina_pre_req char(7) NOT NULL,
-  PRIMARY KEY (codigo_disciplina, codigo_disciplina_pre_req),
-  FOREIGN KEY (codigo_disciplina) REFERENCES tab_disciplinas(codigo_disciplina),
-  FOREIGN KEY (codigo_disciplina_pre_req) REFERENCES tab_disciplinas(codigo_disciplina)
-);
 CREATE TABLE tab_alunos_turmas(
   matricula_aluno_curso numeric(14) NOT NULL,
   id_turma integer NOT NULL,
@@ -173,6 +128,51 @@ CREATE TABLE tab_alunos_turmas(
   FOREIGN KEY (matricula_aluno_curso) REFERENCES tab_alunos_cursos(matricula_aluno_curso),
   FOREIGN KEY (id_turma) REFERENCES tab_turmas(id_turma)
 );
+CREATE TABLE tab_aulas(
+  id_turma_aula integer NOT NULL,
+  dia_semana_aula char(3) NOT NULL,
+  hora_inicio_aula time NOT NULL,
+  hora_fim_aula time NOT NULL,
+  tipo_aula char(1) NOT NULL,
+  professor_aula numeric(5) NULL,
+  PRIMARY KEY (id_turma_aula, dia_semana_aula, hora_inicio_aula),
+  FOREIGN KEY (id_turma_aula) REFERENCES tab_turmas(id_turma),
+  FOREIGN KEY (professor_aula) REFERENCES tab_professores(matricula_professor),
+  CHECK (dia_semana_aula IN ('Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab')),
+  CHECK (tipo_aula = 'P' OR tipo_aula = 'L')
+);
+CREATE TABLE tab_disciplinas_pre_req(
+  codigo_disciplina char(7) NOT NULL,
+  codigo_disciplina_pre_req char(7) NOT NULL,
+  PRIMARY KEY (codigo_disciplina, codigo_disciplina_pre_req),
+  FOREIGN KEY (codigo_disciplina) REFERENCES tab_disciplinas(codigo_disciplina),
+  FOREIGN KEY (codigo_disciplina_pre_req) REFERENCES tab_disciplinas(codigo_disciplina)
+);
+CREATE TABLE tab_alunos_cursos(
+  id_aluno integer NOT NULL,
+  codigo_curso numeric(3) NOT NULL,
+  matricula_aluno_curso numeric(14) NOT NULL,
+  ano_inicio_aluno_curso numeric(4) NOT NULL,
+  ano_conclusao_aluno_curso numeric(4) NULL,
+  PRIMARY KEY (matricula_aluno_curso),
+  UNIQUE (id_aluno, codigo_curso),
+  FOREIGN KEY (id_aluno) REFERENCES tab_alunos(id_aluno),
+  FOREIGN KEY (codigo_curso) REFERENCES tab_cursos(codigo_curso)
+);
+CREATE TABLE tab_alunos(
+  id_aluno serial NOT NULL, -- identificador gerado pelo SGBD para o aluno já que ele não tem atributo obrigatório identificador natural
+  nome_aluno varchar(40) NOT NULL,
+  cart_identidade_aluno varchar(12) NULL,
+  cpf_aluno varchar(14) NULL,
+  end_aluno varchar(200) NOT NULL,
+  sexo_aluno char(1) NOT NULL,
+  data_nasc_aluno date NOT NULL,
+  PRIMARY KEY (id_aluno),
+  UNIQUE (cpf_aluno),
+  UNIQUE (cart_identidade_aluno),
+  CHECK (sexo_aluno = 'M' OR sexo_aluno = 'F'),
+  CHECK (cart_identidade_aluno IS NOT NULL OR cpf_aluno IS NOT NULL)
+);
 CREATE TABLE tab_professores_disciplinas(
   matricula_professor numeric(5) NOT NULL,
   codigo_disciplina char(7) NOT NULL,
@@ -185,3 +185,8 @@ ALTER TABLE tab_escolas
 ALTER TABLE tab_cursos
   ADD FOREIGN KEY (coordenador_curso) REFERENCES tab_professores(matricula_professor);
 END;
+
+
+
+
+

@@ -1,4 +1,3 @@
-// package AtividadesPOO.LeituraComSep;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,8 +31,7 @@ public class Main {
         }
         if (j == 3) {
           int real = Integer.parseInt(info);
-          
-          info = formatReal(real);
+          info = formatReal(real) + "\n          ";
         }
 
         if (j == 4 && info == null) {
@@ -41,10 +39,10 @@ public class Main {
         }
         // formatação de SEXO---------------
         if (j == 6 && info != null) {
-          info = sexoString(info);
+          info = sexoString(info) + "\n          ";
         }
         if (j == 9 && info != null) {
-          info = sexoString(info);
+          info = sexoString(info) + "\n          ";
         }
 
         // formatação de DATA---------------

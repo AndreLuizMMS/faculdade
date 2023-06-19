@@ -9,8 +9,13 @@ public class ConnectionDB {
 
     Connection conn = null;
 
+    String url = "jdbc:mysql://localhost:3306/";
+    String dbName = "vicente";
+    String user = "deds";
+    String password = "password";
+
     try {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vicente", "deds", "password");
+      conn = DriverManager.getConnection(url + dbName, user, password);
       System.out.println("connected");
     } catch (Exception ex) {
       System.out.println("SQLException: " + ex.getMessage());

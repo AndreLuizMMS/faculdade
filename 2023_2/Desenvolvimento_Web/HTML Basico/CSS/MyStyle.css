@@ -1,0 +1,59 @@
+* {
+  background-color: #f6f6f6;
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+
+  color: purple;
+}
+
+.fake-img {
+  width: 150px;
+}
+
+.header {
+  display: flex;
+  gap: 4rem;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.paragraph {
+  wiPdth: 70%;
+  font-size: 1rem;
+  line-height: 1.5rem;
+    margin-bottom: 5em;
+}
+
+.goiania {
+  width: 25rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 1rem;
+  font-weight: bold;
+}
+
+li {
+  list-style-type: none;
+  font-size: 1.5rem;
+}
+
+.logo navbar {
+  background: #dedede;
+}
+
+.navbar {
+  margin-top: 1rem;
+}
